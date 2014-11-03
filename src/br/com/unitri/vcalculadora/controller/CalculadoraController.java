@@ -31,8 +31,9 @@ public class CalculadoraController {
         this.calculadora.addDividirListener(new DividirListener());
         this.calculadora.addMultiplicarListener(new MultiplicarListener());
         this.calculadora.addSomarListener(new SomarListener());
-        this.calculadora.addDividirListener(new DividirListener());
+        this.calculadora.addSubtrairListener(new SubtrairListener());
         this.calculadora.addIgualListener(new IgualListener());
+        this.calculadora.AddResetListener(new ResetListener());
 
     }
 
@@ -43,8 +44,8 @@ public class CalculadoraController {
         if (caractere.equals("+") || caractere.equals("-")
                 || caractere.equals("*") || caractere.equals("/")) {
             if (visor.equals("")) {
-            }
-            if (visor.contains(caractere)) {
+            }else if (visor.contains("+") || visor.contains("-")
+                    || visor.contains("*") || visor.contains("/")){
                 if (Snumero2.equals("")) {
                 } else {
                     Snumero1 = mostraResultado();
@@ -76,25 +77,26 @@ public class CalculadoraController {
                     }
                 }
             }
-        }else if(caractere.equals("=")){
-            if(!operador.equals("")){
-               if(!Snumero2.equals("")){
-                   String valor = mostraResultado();
-                   Snumero1 = valor;
-                   operador = "";
-                   Snumero2 = "";
-               } 
+        } else if (caractere.equals("=")) {
+            if (!operador.equals("")) {
+                if (!Snumero2.equals("")) {
+                    String valor = mostraResultado();
+                    Snumero1 = valor;
+                    operador = "";
+                    Snumero2 = "";
+                }
             }
-        }else if(visor.contains("+") || visor.contains("-")
-                 || visor.contains("*") || visor.contains("/")) {
+        } else if (caractere.equals("C")) {
+            operador = "";
+            Snumero1 = "";
+            Snumero2 = "";
+        } else if (visor.contains("+") || visor.contains("-")
+                || visor.contains("*") || visor.contains("/")) {
             Snumero2 += caractere;
-            
-        }else{
-            Snumero1 +=caractere;
+        } else {
+            Snumero1 += caractere;
         }
-        
-        calculadora.setVisor(Snumero1+operador+Snumero2);
-        
+        calculadora.setVisor(Snumero1 + operador + Snumero2);
     }
 
     private String mostraResultado() {
@@ -218,7 +220,7 @@ public class CalculadoraController {
 
         }
     }
-    
+
     public class DividirListener implements ActionListener {
 
         @Override
@@ -227,7 +229,7 @@ public class CalculadoraController {
 
         }
     }
-    
+
     public class MultiplicarListener implements ActionListener {
 
         @Override
@@ -236,7 +238,7 @@ public class CalculadoraController {
 
         }
     }
-    
+
     public class SomarListener implements ActionListener {
 
         @Override
@@ -245,7 +247,7 @@ public class CalculadoraController {
 
         }
     }
-    
+
     public class SubtrairListener implements ActionListener {
 
         @Override
@@ -254,11 +256,21 @@ public class CalculadoraController {
 
         }
     }
+
     public class IgualListener implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
             verificaVisor("=");
+
+        }
+    }
+
+    public class ResetListener implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            verificaVisor("C");
 
         }
     }
